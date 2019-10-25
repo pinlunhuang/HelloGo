@@ -17,4 +17,14 @@ func main() {
 
 	fmt.Println(foo())
 
+	bar := func() {
+		fmt.Println("Anonymous Func2")
+	}
+
+	bar()
+
+	go func(i, j int) { //Go routine
+		fmt.Println(i + j)
+	}(1, 2)
+
 }
