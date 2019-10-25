@@ -9,24 +9,37 @@ func add(i, j int) int {
 	return i + j
 }
 
-func getUserListSQL(username, email string) string {
+type searchOpts struct {
+	username string
+	email    string
+}
+
+func getUserListOptsSQL(opts searchOpts) string {
 	sql := "select * from user"
 	where := []string{}
 
-	if username != "" {
-		where = append(where, fmt.Sprintf("username = '%s'", username))
+	if opts.username != "" {
+		where = append(where, fmt.Sprintf("username = '%s'", opts.username))
 	}
 
-	if email != "" {
-		where = append(where, fmt.Sprintf("email = '%s'", email))
+	if opts.email != "" {
+		where = append(where, fmt.Sprintf("email = '%s'", opts.email))
 	}
 
 	return sql + " where " + strings.Join(where, " or ")
 }
 
 func main() {
-	fmt.Println(getUserListSQL("lunwaac", ""))
+	// fmt.Println(getUserListOptsSQL("lunwaac", ""))
 
-	fmt.Println(getUserListSQL("lunwaac", "lunwaac@gmail.com"))
+	fmt.Println(getUserListOptsSQL(searchOpts{
+		username: "lunwaac",
+	}))
+
+	// fmt.Println(getUserListOptsSQL("lunwaac", "lunwaac@gmail.com"))
+	fmt.Println(getUserListOptsSQL(searchOpts{
+		username: "lunwaac",
+		email:    "lunwaac@gmail.com",
+	}))
 
 }
